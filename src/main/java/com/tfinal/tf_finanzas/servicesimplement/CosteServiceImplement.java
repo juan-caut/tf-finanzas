@@ -28,7 +28,7 @@ public class CosteServiceImplement implements CosteService {
 
     @Override
     public Coste listId(int id) {
-        return cR.findById( id).orElse(new Coste());
+        return cR.findById(id).orElse(new Coste());
     }
 }
 

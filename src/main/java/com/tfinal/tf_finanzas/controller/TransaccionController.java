@@ -45,5 +45,11 @@ public class TransaccionController {
         revS.insert(p);
     }
 
+    @PutMapping("/updatecosts")
+    public void updateCosts(@RequestBody Transaccion dto) {
+        ModelMapper m = new ModelMapper();
+        Transaccion p = m.map(dto, Transaccion.class);
+        revS.updateCosts(p);
+    }
 
 }
