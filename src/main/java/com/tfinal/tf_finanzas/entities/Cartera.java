@@ -16,7 +16,7 @@ public class Cartera {
     @Column(name = "nombrecartera", length = 50, nullable = false)
     private String nombreCartera;
 
-    @Column(name = "fecha_creacion")
+    @Column(name = "fecha_creacion", insertable = false, updatable = false)
     private LocalDateTime fechaCreacion;
 
     @Column(name = "tipo_doc", length = 30, nullable = false)

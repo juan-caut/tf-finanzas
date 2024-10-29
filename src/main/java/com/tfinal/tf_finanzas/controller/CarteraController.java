@@ -1,5 +1,6 @@
 package com.tfinal.tf_finanzas.controller;
 
+import com.tfinal.tf_finanzas.dto.CarteraDTO;
 import com.tfinal.tf_finanzas.entities.Cartera;
 import com.tfinal.tf_finanzas.service.CarteraService;
 import org.modelmapper.ModelMapper;
@@ -16,7 +17,7 @@ public class CarteraController {
     private CarteraService revS;
 
     @PostMapping
-    public void insert(@RequestBody Cartera dto) {
+    public void insert(@RequestBody CarteraDTO dto) {
         ModelMapper m = new ModelMapper();
         Cartera p = m.map(dto, Cartera.class);
         revS.insert(p);
@@ -31,9 +32,9 @@ public class CarteraController {
     }
 
     @GetMapping("/{id}")
-    public Cartera listId(@PathVariable("id") Integer id) {
+    public CarteraDTO listId(@PathVariable("id") Integer id) {
         ModelMapper m = new ModelMapper();
-        Cartera dto=m.map(revS.listId(id),Cartera.class);
+        CarteraDTO dto=m.map(revS.listId(id),CarteraDTO.class);
         return dto;
     }
 

@@ -17,7 +17,7 @@ public class TasaCambio {
     @Column(name = "tasa", precision = 17, scale = 15, nullable = false)
     private BigDecimal tasa;
 
-    @Column(name = "fecharegistrp", nullable = false)
+    @Column(name = "fecharegistrp", insertable = false, updatable = false, nullable = false)
     private LocalDate fechaRegistro;
 
     @ManyToOne

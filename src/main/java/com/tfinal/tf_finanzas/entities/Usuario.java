@@ -27,7 +27,7 @@ public class Usuario {
     @Column(name = "estado", length = 20, nullable = true)
     private String estado;
 
-    @Column(name = "fechacreacion", nullable = true)
+    @Column(name = "fechacreacion", insertable = false, updatable = false, nullable = true)
     private LocalDateTime fechacreacion;
 
     @ManyToOne

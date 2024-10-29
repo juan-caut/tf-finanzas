@@ -16,7 +16,7 @@ public class Log {
     @Column(name = "accion", length = 255, nullable = false)
     private String accion;
 
-    @Column(name = "fecha", nullable = true)
+    @Column(name = "fecha", insertable = false, updatable = false, nullable = true)
     private LocalDateTime fecha;
 
     @Column(name = "detalles", columnDefinition = "TEXT")
