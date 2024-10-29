@@ -1,5 +1,6 @@
 package com.tfinal.tf_finanzas.controller;
 
+import com.tfinal.tf_finanzas.dto.UsuarioDTO;
 import com.tfinal.tf_finanzas.entities.Usuario;
 import com.tfinal.tf_finanzas.service.UsuarioService;
 import org.modelmapper.ModelMapper;
@@ -25,17 +26,17 @@ public class UsuarioController {
     }
 
     @GetMapping
-    public List<Usuario> list() {
+    public List<UsuarioDTO> list() {
         return revS.list().stream().map(x -> {
             ModelMapper m = new ModelMapper();
-            return m.map(x, Usuario.class);
+            return m.map(x, UsuarioDTO.class);
         }).collect(Collectors.toList());
     }
 
     @GetMapping("/{id}")
-    public Usuario listId(@PathVariable("id") Integer id) {
+    public UsuarioDTO listId(@PathVariable("id") Integer id) {
         ModelMapper m = new ModelMapper();
-        Usuario dto=m.map(revS.listId(id),Usuario.class);
+        UsuarioDTO dto=m.map(revS.listId(id),UsuarioDTO.class);
         return dto;
     }
 
