@@ -15,20 +15,20 @@ public class Transaccion {
     private int idTransaccion;
 
     @ManyToOne
-    @JoinColumn(name = "id_letra")
+    @JoinColumn(name = "id_letra", nullable = true)
     private Letra letra;
 
     @ManyToOne
-    @JoinColumn(name = "id_factura")
+    @JoinColumn(name = "id_factura", nullable = true)
     private Factura factura;
 
     @Column(name = "fecha_transaccion", nullable = false)
     private LocalDate fechaTransaccion;
 
-    @Column(name = "costes_iniciales", precision = 24, scale = 15)
+    @Column(name = "costes_iniciales", precision = 24, scale = 15, nullable = true)
     private BigDecimal costesIniciales;
 
-    @Column(name = "costes_finales", precision = 24, scale = 15)
+    @Column(name = "costes_finales", precision = 24, scale = 15, nullable = true)
     private BigDecimal costesFinales;
 
     // Constructor sin argumentos

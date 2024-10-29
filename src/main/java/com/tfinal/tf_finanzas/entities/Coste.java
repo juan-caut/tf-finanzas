@@ -20,10 +20,10 @@ public class Coste {
     @Column(name = "nombre", length = 20, nullable = false)
     private String nombre;
 
-    @Column(name = "monto", precision = 24, scale = 15)
+    @Column(name = "monto", precision = 24, scale = 15,  nullable = false)
     private BigDecimal monto;
 
-    @Column(name = "porcentaje", precision = 17, scale = 15)
+    @Column(name = "porcentaje", precision = 17, scale = 15, nullable = true)
     private BigDecimal porcentaje;
 
     @ManyToOne
