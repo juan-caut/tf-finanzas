@@ -16,13 +16,13 @@ public class ConversionTasa {
     @Column(name = "tasanominal", precision = 17, scale = 15,nullable = false)
     private BigDecimal tasaNominal;
 
-    @Column(name = "tipotasa", length = 10, nullable = false)
-    private String tipoTasa;
+    @Column(name = "tipotasa", nullable = true)
+    private int tipoTasa;
 
     @Column(name = "capitalizacion", nullable = false)
     private int capitalizacion;
 
-    @Column(name = "tasa_efectiva", precision = 17, scale = 15)
+    @Column(name = "tasa_efectiva", precision = 17, scale = 15,nullable = true)
     private BigDecimal tasaEfectiva;
 
     @ManyToOne
@@ -38,7 +38,7 @@ public class ConversionTasa {
     }
 
     // Constructor con argumentos
-    public ConversionTasa(int idConvTasa, BigDecimal tasaNominal, String tipoTasa,
+    public ConversionTasa(int idConvTasa, BigDecimal tasaNominal, int tipoTasa,
                           int capitalizacion, BigDecimal tasaEfectiva,
                           Factura factura, Letra letra) {
         this.idConvTasa = idConvTasa;
@@ -67,11 +67,11 @@ public class ConversionTasa {
         this.tasaNominal = tasaNominal;
     }
 
-    public String getTipoTasa() {
+    public int getTipoTasa() {
         return tipoTasa;
     }
 
-    public void setTipoTasa(String tipoTasa) {
+    public void setTipoTasa(int tipoTasa) {
         this.tipoTasa = tipoTasa;
     }
 

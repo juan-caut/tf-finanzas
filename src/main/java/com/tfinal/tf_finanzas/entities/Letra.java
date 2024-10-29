@@ -28,7 +28,7 @@ public class Letra {
     @Column(name = "valor_nominal", precision = 24, scale = 15, nullable = false)
     private BigDecimal valorNominal;
 
-    @Column(name = "tasa_efectiva", precision = 17, scale = 15, nullable = false)
+    @Column(name = "tasa_efectiva", precision = 17, scale = 15, nullable = true)
     private BigDecimal tasaEfectiva;
 
     @ManyToOne
