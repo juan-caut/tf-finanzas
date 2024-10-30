@@ -11,12 +11,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api/cartera")
+@RequestMapping("/api")
 public class CarteraController {
     @Autowired
     private CarteraService revS;
 
-    @PostMapping
+    @PostMapping("/api/cartera")
     public void insert(@RequestBody CarteraDTO dto) {
         ModelMapper m = new ModelMapper();
         Cartera p = m.map(dto, Cartera.class);
