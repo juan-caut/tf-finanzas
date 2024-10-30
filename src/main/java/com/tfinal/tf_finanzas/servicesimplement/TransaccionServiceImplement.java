@@ -4,6 +4,7 @@ package com.tfinal.tf_finanzas.servicesimplement;
 import com.tfinal.tf_finanzas.entities.Coste;
 import com.tfinal.tf_finanzas.entities.Transaccion;
 import com.tfinal.tf_finanzas.repositories.CosteRepository;
+import com.tfinal.tf_finanzas.repositories.LetraRepository;
 import com.tfinal.tf_finanzas.repositories.TransaccionRepository;
 import com.tfinal.tf_finanzas.service.TransaccionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ public class TransaccionServiceImplement implements TransaccionService {
 
     @Autowired
     private TransaccionRepository cR;
+
     @Autowired
     private CosteRepository cosRep;
 
@@ -34,11 +36,14 @@ public class TransaccionServiceImplement implements TransaccionService {
 
     @Override
     public Transaccion listId(int id) {
-        return cR.findById( id).orElse(new Transaccion());
+        return cR.findById(id).orElse(new Transaccion());
     }
 
     @Override
-    public void updateCosts(Transaccion transaccion) {
+    public void updateCosts(int id) {
+
+        Transaccion transaccion=cR.findById(id).orElse(new Transaccion());
+
         BigDecimal costesinicial=new BigDecimal("0.0");
         BigDecimal costesfinal=new BigDecimal("0.0");
 

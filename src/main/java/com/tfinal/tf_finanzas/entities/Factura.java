@@ -17,10 +17,10 @@ public class Factura {
     @Column(name = "numero_factura", length = 50, nullable = false)
     private String numeroFactura;
 
-    @Column(name = "fecha_emision", nullable = false)
+    @Column(name = "fecha_emision", nullable = true)
     private LocalDate fechaEmision;
 
-    @Column(name = "fecha_vencimiento", nullable = false)
+    @Column(name = "fecha_vencimiento", nullable = true)
     private LocalDate fechaVencimiento;
 
     @Column(name = "monto_total", precision = 24, scale = 15, nullable = false)
@@ -37,10 +37,7 @@ public class Factura {
     public Factura() {
     }
 
-    // Constructor con argumentos
-    public Factura(int idFactura, String numeroFactura, LocalDate fechaEmision,
-                   LocalDate fechaVencimiento, BigDecimal montoTotal,
-                   BigDecimal tasaEfectiva, Cartera cartera) {
+    public Factura(int idFactura, String numeroFactura, LocalDate fechaEmision, LocalDate fechaVencimiento, BigDecimal montoTotal, BigDecimal tasaEfectiva, Cartera cartera) {
         this.idFactura = idFactura;
         this.numeroFactura = numeroFactura;
         this.fechaEmision = fechaEmision;

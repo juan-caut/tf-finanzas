@@ -7,5 +7,5 @@ public interface TransaccionService {
     public void insert(Transaccion transaccion);
     List<Transaccion> list();
     public Transaccion listId(int idTransaccion);
-    public void updateCosts(Transaccion transaccion);
+    public void updateCosts(int id);
 }

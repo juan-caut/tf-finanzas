@@ -22,8 +22,11 @@ public class Transaccion {
     @JoinColumn(name = "id_factura", nullable = true)
     private Factura factura;
 
-    @Column(name = "fecha_transaccion", nullable = false)
+    @Column(name = "fecha_transaccion", nullable = true)
     private LocalDate fechaTransaccion;
+
+    @Column(name = "diasadesc", nullable = true)
+    private int diasadesc;
 
     @Column(name = "costes_iniciales", precision = 24, scale = 15, nullable = true)
     private BigDecimal costesIniciales;
@@ -35,19 +38,25 @@ public class Transaccion {
     public Transaccion() {
     }
 
-    // Constructor con argumentos
-    public Transaccion(int idTransaccion, Letra letra, Factura factura,
-                       LocalDate fechaTransaccion, BigDecimal costesIniciales,
-                       BigDecimal costesFinales) {
+    public Transaccion(int idTransaccion, Letra letra, Factura factura, LocalDate fechaTransaccion, int diasadesc, BigDecimal costesIniciales, BigDecimal costesFinales) {
         this.idTransaccion = idTransaccion;
         this.letra = letra;
         this.factura = factura;
         this.fechaTransaccion = fechaTransaccion;
+        this.diasadesc = diasadesc;
         this.costesIniciales = costesIniciales;
         this.costesFinales = costesFinales;
     }
 
     // Getters y Setters
+    public int getDiasadesc() {
+        return diasadesc;
+    }
+
+    public void setDiasadesc(int diasadesc) {
+        this.diasadesc = diasadesc;
+    }
+
     public int getIdTransaccion() {
         return idTransaccion;
     }

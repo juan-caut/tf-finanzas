@@ -43,6 +43,10 @@ public class DescuentoController {
         Descuento p = m.map(dto, Descuento.class);
         revS.insert(p);
     }
+    @PutMapping("/calcdescuento")
+    public void insertDesc(@RequestParam("idtransac") Integer id) {
+        revS.insertDesc(id);
+    }
 
 
 }

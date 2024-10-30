@@ -36,30 +36,33 @@ public class ConversionTasaServiceImplement implements ConversionTasaService {
     }
 
     private static BigDecimal calculartea(ConversionTasa conversionTasa) {
-        int periodotea=0;
+
+        int n=0;
         switch (conversionTasa.getCapitalizacion()) {
-            case 1 -> periodotea = 360;
-            case 15 -> periodotea = 24;
-            case 30 -> periodotea = 12;
-            case 60 -> periodotea = 6;
-            case 90 -> periodotea = 4;
-            case 120 -> periodotea = 3;
-            case 180 -> periodotea = 2;
-            case 360 -> periodotea = 1;
-            default -> periodotea = 30;  // Valor por defecto si no coincide ningún caso
+            case 1 -> n = 360;
+            case 15 -> n = 24;
+            case 30 -> n = 12;
+            case 60 -> n = 6;
+            case 90 -> n = 4;
+            case 120 -> n = 3;
+            case 180 -> n = 2;
+            case 360 -> n = 1;
+            default -> n = 30;  // Valor por defecto si no coincide ningún caso
         }
-        BigDecimal numeradorcalctn = conversionTasa.getTasaNominal().divide(BigDecimal.valueOf(100),15, RoundingMode.HALF_UP);
+        //CONVERTIR TASA NOMINAL A PROPORCIÓN
+        BigDecimal TNenproporcion = conversionTasa.getTasaNominal().divide(BigDecimal.valueOf(100),15, RoundingMode.HALF_UP);
 
-        int denominadorcalctn= conversionTasa.getTipoTasa()/conversionTasa.getCapitalizacion();
+        //CALCULAR TEA
+        double m = (double)conversionTasa.getTipoTasa()/conversionTasa.getCapitalizacion();
 
-        BigDecimal teacalc1=numeradorcalctn.divide(BigDecimal.valueOf(denominadorcalctn),15, RoundingMode.HALF_UP)
+        BigDecimal teacalc1=TNenproporcion.divide(BigDecimal.valueOf(m),15, RoundingMode.HALF_UP)
                 .add(BigDecimal.valueOf(1));
 
-        BigDecimal teacalc2=teacalc1.pow(periodotea);
+        BigDecimal teacalc2=teacalc1.pow(n);
 
         BigDecimal teacalc3=teacalc2.subtract(BigDecimal.valueOf(1));
-        BigDecimal teacalc4=teacalc3.multiply(BigDecimal.valueOf(100));
-        return teacalc4;
+        BigDecimal TEA=teacalc3.multiply(BigDecimal.valueOf(100));
+        return TEA;
     }
 
 }

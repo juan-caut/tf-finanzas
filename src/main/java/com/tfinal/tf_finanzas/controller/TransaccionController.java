@@ -1,6 +1,7 @@
 package com.tfinal.tf_finanzas.controller;
 
 import com.tfinal.tf_finanzas.entities.Transaccion;
+import com.tfinal.tf_finanzas.service.DescuentoService;
 import com.tfinal.tf_finanzas.service.TransaccionService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,8 @@ public class TransaccionController {
 
     @Autowired
     private TransaccionService revS;
+    @Autowired
+    private DescuentoService descS;
 
     @PostMapping
     public void insert(@RequestBody Transaccion dto) {
@@ -46,10 +49,9 @@ public class TransaccionController {
     }
 
     @PutMapping("/updatecosts")
-    public void updateCosts(@RequestBody Transaccion dto) {
-        ModelMapper m = new ModelMapper();
-        Transaccion p = m.map(dto, Transaccion.class);
-        revS.updateCosts(p);
+    public void updateCosts(@RequestParam("id") Integer id) {
+        revS.updateCosts(id);
     }
+
 
 }
