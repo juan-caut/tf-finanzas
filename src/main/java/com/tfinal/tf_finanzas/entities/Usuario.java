@@ -31,7 +31,7 @@ public class Usuario {
     private LocalDateTime fechacreacion;
 
     @ManyToOne
-    @JoinColumn(name = "roles_idrol", nullable = false)
+    @JoinColumn(name = "roles_idrol", nullable = true)
     private Rol rol;
 
     public Usuario() {

@@ -1,6 +1,7 @@
 package com.tfinal.tf_finanzas.servicesimplement;
 
 
+import com.tfinal.tf_finanzas.entities.Rol;
 import com.tfinal.tf_finanzas.entities.Usuario;
 import com.tfinal.tf_finanzas.repositories.UsuarioRepository;
 import com.tfinal.tf_finanzas.service.UsuarioService;
@@ -22,6 +23,8 @@ public class UsuarioServiceImplement implements UsuarioService {
 
     @Override
     public void insert(Usuario user) {
+        user.setRol(new Rol(2,"EMPLOYEE"));
+        user.setEstado("ACTIVO");
         cR.save(user);
     }
 
