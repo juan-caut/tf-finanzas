@@ -23,8 +23,11 @@ public class UsuarioServiceImplement implements UsuarioService {
 
     @Override
     public void insert(Usuario user) {
-        user.setRol(new Rol(2,"EMPLOYEE"));
-        user.setEstado("ACTIVO");
+        if(user.getEstado()==null && user.getRol()==null){
+            user.setRol(new Rol(2,"EMPLOYEE"));
+            user.setEstado("INACTIVO");
+        }
+
         cR.save(user);
     }
 
