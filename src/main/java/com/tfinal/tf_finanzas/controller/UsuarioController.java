@@ -39,7 +39,12 @@ public class UsuarioController {
         UsuarioDTO dto=m.map(revS.listId(id),UsuarioDTO.class);
         return dto;
     }
-
+    @GetMapping("/get/{username}")
+    public Usuario getUsuariobyusername(@PathVariable String username) {
+        ModelMapper m = new ModelMapper();
+        Usuario dto=m.map(revS.getUsuariobyusername(username),Usuario.class);
+        return dto;
+    }
     @PutMapping
     public void update(@RequestBody Usuario dto) {
         ModelMapper m = new ModelMapper();

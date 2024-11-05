@@ -1,48 +1,21 @@
 package com.tfinal.tf_finanzas.dto;
 
 import com.tfinal.tf_finanzas.entities.Usuario;
+import lombok.Data;
+import org.apache.catalina.User;
 
 import java.time.LocalDateTime;
 
+@Data
 public class CarteraDTO {
 
     private String nombreCartera;
     private String tipoDoc;
     private Usuario usuarioCreador;
     private String moneda;
-
+    private String tasaCambio;
+    private String fechaCreador;
     // Getters y Setters
 
-    public String getNombreCartera() {
-        return nombreCartera;
-    }
 
-    public void setNombreCartera(String nombreCartera) {
-        this.nombreCartera = nombreCartera;
-    }
-
-
-    public String getTipoDoc() {
-        return tipoDoc;
-    }
-
-    public void setTipoDoc(String tipoDoc) {
-        this.tipoDoc = tipoDoc;
-    }
-
-    public Usuario getUsuarioCreador() {
-        return usuarioCreador;
-    }
-
-    public void setUsuarioCreador(Usuario usuarioCreador) {
-        this.usuarioCreador = usuarioCreador;
-    }
-
-    public String getMoneda() {
-        return moneda;
-    }
-
-    public void setMoneda(String moneda) {
-        this.moneda = moneda;
-    }
 }

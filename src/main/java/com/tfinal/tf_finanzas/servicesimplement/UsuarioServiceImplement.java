@@ -35,6 +35,12 @@ public class UsuarioServiceImplement implements UsuarioService {
     public Usuario listId(int id) {
         return cR.findById(id).orElse(new Usuario());
     }
+
+    @Override
+    public Usuario getUsuariobyusername(String username) {
+        return cR.findByUsername(username);
+    }
+
     @Override
     public String verificationUser(String ident) {
         return cR.verificationUser(ident);

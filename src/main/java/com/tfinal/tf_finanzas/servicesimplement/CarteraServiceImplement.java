@@ -29,5 +29,10 @@ public class CarteraServiceImplement implements CarteraService {
     public Cartera listId(int id) {
         return cR.findById(id).orElse(new Cartera());
     }
+
+    @Override
+    public List<Cartera> getCarterasByUsuarioId(int usuarioId) {
+        return cR.findAllByUsuarioCreador_Iduser(usuarioId);
+    }
 }
 
