@@ -30,5 +30,10 @@ public class LetraServiceImplement implements LetraService {
     public Letra listId(int id) {
         return cR.findById( id).orElse(new Letra());
     }
+
+    @Override
+    public List<Letra> findAllByCarteraIs(int carteraId) {
+        return cR.findAllByCartera_IdCartera(carteraId);
+    }
 }
 

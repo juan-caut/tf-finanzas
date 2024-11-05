@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
+@CrossOrigin(origins = "http://localhost:4200")
 
 @RestController
 @RequestMapping("/api/letra")
@@ -44,6 +45,10 @@ public class LetraController {
         Letra p = m.map(dto, Letra.class);
         revS.insert(p);
     }
-
+    @GetMapping("/letraByCartera/{carteraId}")
+    public List<Letra> findAllByCarteraIs(@PathVariable int carteraId){
+        ModelMapper m = new ModelMapper();
+        return revS.findAllByCarteraIs(carteraId);
+    }
 
 }
