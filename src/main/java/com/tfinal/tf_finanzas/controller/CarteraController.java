@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
-
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/api")
 public class CarteraController {
@@ -17,10 +17,11 @@ public class CarteraController {
     private CarteraService revS;
 
     @PostMapping("/api/cartera")
-    public void insert(@RequestBody CarteraDTO dto) {
+    public Cartera insert(@RequestBody CarteraDTO dto) {
         ModelMapper m = new ModelMapper();
         Cartera p = m.map(dto, Cartera.class);
         revS.insert(p);
+        return p;
     }
 
     @GetMapping
@@ -42,8 +43,11 @@ public class CarteraController {
     public void update(@RequestBody Cartera dto) {
         ModelMapper m = new ModelMapper();
         Cartera p = m.map(dto, Cartera.class);
-        revS.insert(p);
+     //   revS.insert(dto);
     }
-
+    @GetMapping("/carteraByUser/{usuarioId}")
+    public List<Cartera> getCarterasByUsuarioId(@PathVariable int usuarioId) {
+        return revS.getCarterasByUsuarioId(usuarioId);
+    }
 
 }
