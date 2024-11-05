@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
-
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/api/usuario")
 public class UsuarioController {
@@ -54,15 +54,15 @@ public class UsuarioController {
         return str;
     }
 
-    @GetMapping("/login")
-    public ResponseEntity<String> authUser(@RequestParam("ident") String ident, @RequestParam("pass") String pass) {
+    @GetMapping("/login/{username}/{pass}")
+    public ResponseEntity<String> authUser(@PathVariable("username") String username, @PathVariable("pass") String pass) {
 
-        if (!ident.matches("[a-zA-Z0-9_]+")) {
+        if (!username.matches("[a-zA-Z0-9_]+")) {
             return ResponseEntity.ok("FALLA");
         } else if (!pass.matches("[a-zA-Z0-9_]+")) {
             return ResponseEntity.ok("FALLA");
         }
-        String str = revS.authUser(ident, pass);
+        String str = revS.authUser(username, pass);
         try {
             // Lógica principal
             if (str.matches("ACTIVO")) {

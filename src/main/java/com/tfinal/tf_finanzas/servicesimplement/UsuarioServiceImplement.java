@@ -40,8 +40,8 @@ public class UsuarioServiceImplement implements UsuarioService {
         return cR.verificationUser(ident);
     }
     @Override
-    public String authUser(String ident, String pass) {
-        return cR.authUser(ident,pass);
+    public String authUser(String username, String pass) {
+        return cR.authUser(username,pass);
     }
 }
 

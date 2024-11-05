@@ -8,5 +8,5 @@ public interface UsuarioService {
     List<Usuario> list();
     public Usuario listId(int idUsuario);
     public String verificationUser(String ident);
-    public String authUser(String ident, String pass);
+    public String authUser(String username, String pass);
 }
