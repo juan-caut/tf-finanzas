@@ -66,28 +66,19 @@ public class UsuarioController {
 
     @GetMapping("/login")
     public ResponseEntity<String> login( @RequestParam String username, @RequestParam String password) {
-        try {
-            String value = revS.authUser(username, password);
-            return  ResponseEntity.ok(value);
-        } catch (Exception e) {
-          return  ResponseEntity.badRequest().build();
-        }
-
-
-    }
-
-    public ResponseEntity<String> authUser(@RequestParam String username, @RequestParam String pass) {
 
         if (!username.matches("[a-zA-Z0-9_]+")) {
             return ResponseEntity.ok("FALLA");
-        } else if (!pass.matches("[a-zA-Z0-9_]+")) {
+        } else if (!password.matches("[a-zA-Z0-9_]+")) {
             return ResponseEntity.ok("FALLA");
         }
-        String str = revS.authUser(username, pass);
+
+        String value = revS.authUser(username, password);
+
         try {
             // Lógica principal
-            if (str.matches("ACTIVO")) {
-                return ResponseEntity.ok(str);
+            if (value.matches("ACTIVO")) {
+                return ResponseEntity.ok(value);
             } else {
                 return ResponseEntity.ok("USUARIO INVALIDO");
             }
@@ -96,7 +87,8 @@ public class UsuarioController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("USUARIO INVALIDO");
         }
-    }
 
+
+    }
 
 }
