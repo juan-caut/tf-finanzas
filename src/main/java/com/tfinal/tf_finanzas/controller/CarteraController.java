@@ -5,6 +5,7 @@ import com.tfinal.tf_finanzas.entities.Cartera;
 import com.tfinal.tf_finanzas.service.CarteraService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -45,9 +46,9 @@ public class CarteraController {
         Cartera p = m.map(dto, Cartera.class);
      //   revS.insert(dto);
     }
-    @GetMapping("/carteraByUser/{usuarioId}")
-    public List<Cartera> getCarterasByUsuarioId(@PathVariable int usuarioId) {
-        return revS.getCarterasByUsuarioId(usuarioId);
-    }
+    @GetMapping("/carteraByUser")
+    public List<Cartera> getCarterasByUsuarioId(@RequestParam int usuarioId) {
 
+            return (revS.getCarterasByUsuarioId(usuarioId));
+       }
 }

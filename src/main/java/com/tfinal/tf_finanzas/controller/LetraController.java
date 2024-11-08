@@ -17,7 +17,7 @@ public class LetraController {
     @Autowired
     private LetraService revS;
 
-    @PostMapping
+    @PostMapping("/save")
     public void insert(@RequestBody Letra dto) {
         ModelMapper m = new ModelMapper();
         Letra p = m.map(dto, Letra.class);
@@ -45,8 +45,8 @@ public class LetraController {
         Letra p = m.map(dto, Letra.class);
         revS.insert(p);
     }
-    @GetMapping("/letraByCartera/{carteraId}")
-    public List<Letra> findAllByCarteraIs(@PathVariable int carteraId){
+    @GetMapping("/letraByCartera")
+    public List<Letra> findAllByCarteraIs(@RequestParam int carteraId){
         ModelMapper m = new ModelMapper();
         return revS.findAllByCarteraIs(carteraId);
     }
