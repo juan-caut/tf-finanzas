@@ -1,5 +1,6 @@
 package com.tfinal.tf_finanzas.controller;
 
+import com.tfinal.tf_finanzas.dto.LetraDTO;
 import com.tfinal.tf_finanzas.entities.Letra;
 import com.tfinal.tf_finanzas.service.LetraService;
 import org.modelmapper.ModelMapper;
@@ -9,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.stream.Collectors;
 @CrossOrigin(origins = "http://localhost:4200")
-
 @RestController
 @RequestMapping("/api/letra")
 public class LetraController {
@@ -18,9 +18,11 @@ public class LetraController {
     private LetraService revS;
 
     @PostMapping("/save")
-    public void insert(@RequestBody Letra dto) {
+    public void insert(@RequestBody LetraDTO dto) {
+        System.out.println("insertando: "+dto.getValorNominal()+"-"+dto.getFechaEmision()+"-"+dto.getCarteraid());
+
         ModelMapper m = new ModelMapper();
-        Letra p = m.map(dto, Letra.class);
+        LetraDTO p = m.map(dto, LetraDTO.class);
         revS.insert(p);
     }
 
@@ -43,7 +45,7 @@ public class LetraController {
     public void update(@RequestBody Letra dto) {
         ModelMapper m = new ModelMapper();
         Letra p = m.map(dto, Letra.class);
-        revS.insert(p);
+        revS.insertuptade(p);
     }
     @GetMapping("/letraByCartera")
     public List<Letra> findAllByCarteraIs(@RequestParam int carteraId){
