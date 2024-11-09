@@ -5,6 +5,7 @@ import com.tfinal.tf_finanzas.entities.Letra;
 import com.tfinal.tf_finanzas.service.LetraService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,9 +18,9 @@ public class LetraController {
     @Autowired
     private LetraService revS;
 
-    @PostMapping("/save")
+    @PostMapping
     public void insert(@RequestBody LetraDTO dto) {
-        System.out.println("insertando: "+dto.getValorNominal()+"-"+dto.getFechaEmision()+"-"+dto.getCarteraid());
+        System.out.println("Solicitud recibida en /save con datos: "+dto.getNumeroLetra());
 
         ModelMapper m = new ModelMapper();
         LetraDTO p = m.map(dto, LetraDTO.class);
