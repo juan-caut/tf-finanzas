@@ -24,10 +24,11 @@ public class ConversionTasaServiceImplement implements ConversionTasaService {
     }
 
     @Override
-    public void insert(ConversionTasa conversionTasa) {
+    public BigDecimal insert(ConversionTasa conversionTasa) {
         BigDecimal teacalc = calculartea(conversionTasa);
         conversionTasa.setTasaEfectiva(teacalc);
         cR.save(conversionTasa);
+        return teacalc;
     }
 
     @Override

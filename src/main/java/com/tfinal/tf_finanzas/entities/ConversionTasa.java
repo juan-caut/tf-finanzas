@@ -26,11 +26,11 @@ public class ConversionTasa {
     private BigDecimal tasaEfectiva;
 
     @ManyToOne
-    @JoinColumn(name = "facturas_idfactura")
+    @JoinColumn(name = "facturas_idfactura",nullable = true)
     private Factura factura;
 
     @ManyToOne
-    @JoinColumn(name = "letras_idletra")
+    @JoinColumn(name = "letras_idletra",nullable = true)
     private Letra letra;
 
     // Constructor sin argumentos

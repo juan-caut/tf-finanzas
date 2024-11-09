@@ -4,11 +4,14 @@ import com.tfinal.tf_finanzas.entities.ConversionTasa;
 import com.tfinal.tf_finanzas.service.ConversionTasaService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/api/conversiontasa")
 public class ConversionTasaController {
@@ -16,10 +19,12 @@ public class ConversionTasaController {
     private ConversionTasaService revS;
 
     @PostMapping
-    public void insert(@RequestBody ConversionTasa dto) {
+    public ResponseEntity<BigDecimal> insert(@RequestBody ConversionTasa dto) {
+        System.out.println("Solicitud recibida de conversiontasa: "+dto.getTasaNominal());
         ModelMapper m = new ModelMapper();
         ConversionTasa p = m.map(dto, ConversionTasa.class);
-        revS.insert(p);
+        return ResponseEntity.ok(revS.insert(p));
+
     }
 
     @GetMapping
