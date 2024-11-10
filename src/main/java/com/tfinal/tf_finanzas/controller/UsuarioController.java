@@ -1,6 +1,7 @@
 package com.tfinal.tf_finanzas.controller;
 
 import com.tfinal.tf_finanzas.dto.UsuarioDTO;
+import com.tfinal.tf_finanzas.dto.UsuarioRequest;
 import com.tfinal.tf_finanzas.entities.Usuario;
 import com.tfinal.tf_finanzas.service.UsuarioService;
 import org.modelmapper.ModelMapper;
@@ -22,10 +23,20 @@ public class UsuarioController {
     private UsuarioService revS;
 
     @PostMapping
-    public void insert(@RequestBody Usuario dto) {
-        ModelMapper m = new ModelMapper();
-        Usuario p = m.map(dto, Usuario.class);
-        revS.insert(p);
+    public void insert(@RequestBody UsuarioRequest dto) {
+        System.out.println(dto);
+        Usuario exite=  revS.getUsuariobyusername(dto.getUsername());
+        System.out.println("agggg "+exite);
+
+        if(exite==null) {
+            try {
+                ModelMapper m = new ModelMapper();
+                revS.insert(dto);
+            } catch (Exception e) {
+                e.toString();
+            }
+
+        }
     }
 
     @GetMapping
@@ -50,12 +61,8 @@ public class UsuarioController {
         return dto;
     }
 
-    @PutMapping
-    public void update(@RequestBody Usuario dto) {
-        ModelMapper m = new ModelMapper();
-        Usuario p = m.map(dto, Usuario.class);
-        revS.insert(p);
-    }
+
+
 
     @GetMapping("/verification")
     public String verificationUser(@RequestParam("ident") String ident) {
@@ -76,7 +83,7 @@ public class UsuarioController {
         String value = revS.authUser(username, password);
 
         try {
-            // Lógica principal
+            // Lógica principalgit
             if (value.matches("ACTIVO")) {
                 return ResponseEntity.ok(value);
             } else {

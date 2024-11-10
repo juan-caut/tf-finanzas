@@ -2,9 +2,16 @@ package com.tfinal.tf_finanzas.dto;
 
 import com.tfinal.tf_finanzas.entities.Rol;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.time.LocalDateTime;
+import java.util.Date;
 
-
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class UsuarioDTO {
 
     private int iduser;
@@ -12,7 +19,7 @@ public class UsuarioDTO {
     private String ident;
     private String email;
     private String estado;
-    private LocalDateTime fechacreacion;
+    private Date fechacreacion;
     private Rol rol;
 
 
@@ -57,13 +64,7 @@ public class UsuarioDTO {
         this.email = email;
     }
 
-    public LocalDateTime getFechacreacion() {
-        return fechacreacion;
-    }
 
-    public void setFechacreacion(LocalDateTime fechacreacion) {
-        this.fechacreacion = fechacreacion;
-    }
 
     public Rol getRol() {
         return rol;

@@ -1,13 +1,16 @@
 package com.tfinal.tf_finanzas.servicesimplement;
 
 
+import com.tfinal.tf_finanzas.dto.UsuarioRequest;
 import com.tfinal.tf_finanzas.entities.Rol;
 import com.tfinal.tf_finanzas.entities.Usuario;
+import com.tfinal.tf_finanzas.repositories.RolRepository;
 import com.tfinal.tf_finanzas.repositories.UsuarioRepository;
 import com.tfinal.tf_finanzas.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -15,20 +18,26 @@ public class UsuarioServiceImplement implements UsuarioService {
 
     @Autowired
     private UsuarioRepository cR;
-
+@Autowired
+private RolRepository rolRepository;
     @Override
     public List<Usuario> list() {
         return cR.findAll();
     }
 
     @Override
-    public void insert(Usuario user) {
-        if(user.getEstado()==null && user.getRol()==null){
-            user.setRol(new Rol(2,"EMPLOYEE"));
-            user.setEstado("INACTIVO");
-        }
+    public void insert(UsuarioRequest user) {
 
-        cR.save(user);
+        Usuario usuario = new Usuario();
+        usuario.setUsername(user.getUsername());
+        usuario.setIdent(user.getIdent());
+        usuario.setEmail(user.getEmail());
+        usuario.setPassword(user.getPasswordd());
+        usuario.setFechacreacion(new Date());
+        usuario.setEstado("ACTIVO");
+        Rol rol = rolRepository.findById((user.getIdRol())).orElse(null);
+        usuario.setRol(rol);
+        cR.save(usuario);
     }
 
     @Override

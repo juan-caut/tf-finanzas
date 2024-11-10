@@ -12,12 +12,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/cartera")
 public class CarteraController {
     @Autowired
     private CarteraService revS;
 
-    @PostMapping("/api/cartera")
+    @PostMapping("")
     public Cartera insert(@RequestBody CarteraDTO dto) {
         ModelMapper m = new ModelMapper();
         Cartera p = m.map(dto, Cartera.class);
