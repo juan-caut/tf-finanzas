@@ -5,7 +5,7 @@ import com.tfinal.tf_finanzas.entities.Letra;
 import java.util.List;
 
 public interface LetraService {
-    public void insert(LetraDTO let);
+    public Letra insert(LetraDTO let);
 
     public void insertuptade(Letra let);
     List<Letra> list();

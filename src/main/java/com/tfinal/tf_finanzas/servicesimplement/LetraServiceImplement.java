@@ -2,6 +2,7 @@ package com.tfinal.tf_finanzas.servicesimplement;
 
 
 import com.tfinal.tf_finanzas.dto.LetraDTO;
+import com.tfinal.tf_finanzas.entities.Cartera;
 import com.tfinal.tf_finanzas.entities.Letra;
 import com.tfinal.tf_finanzas.repositories.LetraRepository;
 import com.tfinal.tf_finanzas.service.CarteraService;
@@ -26,21 +27,17 @@ public class LetraServiceImplement implements LetraService {
     }
 
     @Override
-    public void insert(LetraDTO letrita) {
-
-        System.out.println("insertando: "+letrita.getValorNominal()+"-"+letrita.getFechaEmision()+"-"+letrita.getCarteraid());
-        Letra letra=new Letra();
-
-        letra.setNumeroLetra(letrita.getNumeroLetra());
-        letra.setFechaEmision(letrita.getFechaEmision());
-        letra.setFechaVencimiento(letrita.getFechaVencimiento());
-        letra.setTasaEfectiva(letrita.getTasaEfectiva());
-        letra.setValorNominal(letrita.getValorNominal());
-
-        letra.setCartera(cS.listId(letrita.getCarteraid()));
-
-        cR.save(letra);
-    }
+    public Letra insert(LetraDTO letraDTO) {
+            Cartera cartera = cS.listId(letraDTO.getCarteraid());
+            Letra letra = new Letra();
+            letra.setNumeroLetra(letraDTO.getNumeroLetra());
+            letra.setFechaEmision(letraDTO.getFechaEmision());
+            letra.setFechaVencimiento(letraDTO.getFechaVencimiento());
+            letra.setValorNominal(letraDTO.getValorNominal());
+            letra.setTasaEfectiva(letraDTO.getTasaEfectiva());
+            letra.setCartera(cartera);
+                return cR.save(letra);
+        }
 
     @Override
     public void insertuptade(Letra let) {
