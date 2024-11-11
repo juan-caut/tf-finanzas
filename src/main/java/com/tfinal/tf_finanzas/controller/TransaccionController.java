@@ -44,7 +44,6 @@ public class TransaccionController {
         TransaccionDTO p = m.map(dto, TransaccionDTO.class);
         revS.insertvarios(p);
 
-
         List<Transaccion> listtra=revS.listporcartera(carsS.listId(dto.getId_cartera()) );
 
         System.out.println("descontarndo transacciones: ");

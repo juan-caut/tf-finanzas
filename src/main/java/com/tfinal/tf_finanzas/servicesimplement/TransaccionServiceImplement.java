@@ -70,7 +70,7 @@ public class TransaccionServiceImplement implements TransaccionService {
         // descS.deleteall();
         for (Transaccion t : transac) {
             for (Descuento desc1 : listdesc) {
-                if (desc1.getTransaccion().getIdTransaccion()==t.getIdTransaccion()) {
+                if (desc1.getTransaccion().getIdTransaccion()==t.getIdTransaccion() && t.getLetra().getIdLetra()==tr.getIdletra()) {
                     descS.delete(desc1.getIdDescuento());
                 }
             }

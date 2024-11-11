@@ -45,6 +45,7 @@ public class DescuentoController {
     }
     @PutMapping("/calcdescuento")
     public void insertDesc(@RequestParam("idtransac") Integer id) {
+
         revS.insertDesc(id);
     }
 
