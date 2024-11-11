@@ -75,10 +75,10 @@ public class DescuentoServiceImplement implements DescuentoService {
             BigDecimal valorneto=letra.getValorNominal().subtract(montodescuento);
 
             //calcular valor recibido
-            BigDecimal valorrecibido=valorneto.subtract(transaccion.getCostesIniciales());
+            BigDecimal valorrecibido=valorneto.subtract(transaccion.getCostesIniciales()!= null ? transaccion.getCostesIniciales() : BigDecimal.ZERO);
 
             //calcular valor entregado
-            BigDecimal valorentregado=letra.getValorNominal().add(transaccion.getCostesFinales());
+            BigDecimal valorentregado=letra.getValorNominal().add(transaccion.getCostesFinales()!= null ? transaccion.getCostesFinales() : BigDecimal.ZERO);
 
             //calcular TCEA
             BigDecimal TCEAbase=valorentregado.divide(valorrecibido ,15, RoundingMode.HALF_UP);
@@ -135,6 +135,16 @@ public class DescuentoServiceImplement implements DescuentoService {
             descuento.setTransaccion(transaccion);
         }
         cR.save(descuento);
+    }
+
+    @Override
+    public void deleteall() {
+        cR.deleteAll();
+    }
+
+    @Override
+    public void delete(int id) {
+        cR.deleteById(id);
     }
 
 

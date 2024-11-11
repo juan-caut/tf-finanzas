@@ -9,4 +9,6 @@ public interface DescuentoService {
     List<Descuento> list();
     public Descuento listId(int id);
     public void insertDesc(int id);
+    public void deleteall();
+    public void delete(int id);
 }
