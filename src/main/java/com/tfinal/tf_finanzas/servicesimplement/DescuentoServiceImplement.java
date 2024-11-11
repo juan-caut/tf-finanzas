@@ -174,9 +174,7 @@ public class DescuentoServiceImplement implements DescuentoService {
     // Método para calcular la potencia base ^ exponente usando logaritmos y exponenciales
     public static BigDecimal bigDecimalPow(BigDecimal base, BigDecimal exponente, MathContext mc) {
         // Validar que la base no sea negativa
-        if (base.compareTo(BigDecimal.ZERO) <= 0) {
-            throw new IllegalArgumentException("La base debe ser mayor que 0.");
-        }
+
 
         // ln(base) * exponente
         BigDecimal logBase = BigDecimal.valueOf(Math.log(base.doubleValue()));
