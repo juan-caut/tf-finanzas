@@ -1,30 +1,22 @@
 package com.tfinal.tf_finanzas.dto;
 
-import com.tfinal.tf_finanzas.entities.Cartera;
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Date;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class LetraDTO {
-
-    private String numeroLetra;
-
-    private LocalDate fechaEmision;
-
+public class LetraeditDTO {
+    private int id;
+    private LocalDate fechaInicial;
     private LocalDate fechaVencimiento;
-
+    private BigDecimal tasaEfectAnual;
     private BigDecimal valorNominal;
-
-    private BigDecimal tasaEfectiva;
-
-    private int carteraid;
     private boolean visible;
 
 }

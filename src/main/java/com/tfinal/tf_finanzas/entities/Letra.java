@@ -1,6 +1,7 @@
 package com.tfinal.tf_finanzas.entities;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -8,6 +9,7 @@ import java.time.LocalDate;
 
 @Entity
 @Table(name = "letras")
+@Data
 public class Letra {
 
     // Getters y Setters
@@ -32,6 +34,7 @@ public class Letra {
     @Column(name = "tasa_efectiva", precision = 17, scale = 15, nullable = true)
     private BigDecimal tasaEfectiva;
 
+    private  boolean visible;
     @ManyToOne
     @JoinColumn(name = "id_cartera", nullable = false)
     private Cartera cartera;

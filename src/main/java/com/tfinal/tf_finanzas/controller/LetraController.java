@@ -1,6 +1,7 @@
 package com.tfinal.tf_finanzas.controller;
 
 import com.tfinal.tf_finanzas.dto.LetraDTO;
+import com.tfinal.tf_finanzas.dto.LetraeditDTO;
 import com.tfinal.tf_finanzas.entities.Letra;
 import com.tfinal.tf_finanzas.service.LetraService;
 import org.modelmapper.ModelMapper;
@@ -40,16 +41,18 @@ public class LetraController {
         return dto;
     }
 
-    @PutMapping
-    public void update(@RequestBody Letra dto) {
+    @PutMapping("/actualizacion")
+    public void update(@RequestBody LetraeditDTO dto) {
         ModelMapper m = new ModelMapper();
-        Letra p = m.map(dto, Letra.class);
-        revS.insertuptade(p);
+        revS.insertuptade(dto);
     }
     @GetMapping("/letraByCartera")
     public List<Letra> findAllByCarteraIs(@RequestParam int carteraId){
         ModelMapper m = new ModelMapper();
         return revS.findAllByCarteraIs(carteraId);
     }
-
+@DeleteMapping("/eliminar")
+    public  void eliminarletra(@RequestParam Integer id) {
+        revS.delete(id);
+    }
 }
