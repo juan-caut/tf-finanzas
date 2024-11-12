@@ -52,7 +52,8 @@ public class FacturaServiceImplement implements FacturaService {
 
         List<Transaccion> transaccion = transaccionService.list();
         for (Transaccion tr : transaccion) {
-            if (tr.getLetra().getIdLetra() == id) {
+            if(tr.getFactura()!=null)
+            if (tr.getFactura().getIdFactura() == id) {
                 for (Descuento des : listaDescuento) {
                     if (des.getTransaccion().getIdTransaccion() == tr.getIdTransaccion()) {
                         descuentoService.delete(des.getIdDescuento());
