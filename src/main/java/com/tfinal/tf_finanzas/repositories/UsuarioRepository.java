@@ -14,8 +14,10 @@ public interface UsuarioRepository extends JpaRepository<Usuario,Integer>{
     @Query("SELECT u.estado from Usuario u where u.ident=:ident")
     String verificationUser(@Param("ident") String ident);
 
-    @Query("SELECT u.estado from Usuario u where u.username=:username and u.password=:pass")
-    String authUser(@Param("username") String username,@Param("pass") String pass);
+    @Query("SELECT u.estado from Usuario u where u.username=:username and u.password=:pass and u.estado=:activo")
+    String authUser(@Param("username") String username,@Param("pass") String pass, @Param("activo") String activo);
+
+
     public Usuario findByUsername(String username);
 
 

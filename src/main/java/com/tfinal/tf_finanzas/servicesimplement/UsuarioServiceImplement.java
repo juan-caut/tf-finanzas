@@ -34,7 +34,7 @@ private RolRepository rolRepository;
         usuario.setEmail(user.getEmail());
         usuario.setPassword(user.getPasswordd());
         usuario.setFechacreacion(new Date());
-        usuario.setEstado("ACTIVO");
+        usuario.setEstado("INACTIVO");
         Rol rol = rolRepository.findById((user.getIdRol())).orElse(null);
         usuario.setRol(rol);
         cR.save(usuario);
@@ -57,7 +57,7 @@ private RolRepository rolRepository;
 
     @Override
     public String authUser(String username, String pass) {
-        return cR.authUser(username,pass);
+        return cR.authUser(username,pass,"ACTIVO");
     }
 }
 
