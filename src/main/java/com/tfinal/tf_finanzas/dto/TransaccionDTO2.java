@@ -1,9 +1,5 @@
 package com.tfinal.tf_finanzas.dto;
 
-import com.tfinal.tf_finanzas.entities.Cartera;
-import com.tfinal.tf_finanzas.entities.Factura;
-import com.tfinal.tf_finanzas.entities.Letra;
-import jakarta.persistence.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;

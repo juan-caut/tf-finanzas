@@ -79,6 +79,14 @@ public class TransaccionController {
         return dto;
     }
 
+    @GetMapping("/trapfact/{idlet}")
+    public TransaccionDTO2 listpfact(@PathVariable("idlet") Integer idlet) {
+        ModelMapper m = new ModelMapper();
+        TransaccionDTO2 dto=m.map(revS.listpfac(idlet),TransaccionDTO2.class);
+        return dto;
+    }
+
+
     @PutMapping
     public void update(@RequestBody Transaccion dto) {
         ModelMapper m = new ModelMapper();

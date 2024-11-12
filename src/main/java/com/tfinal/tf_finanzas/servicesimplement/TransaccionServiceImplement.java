@@ -58,42 +58,84 @@ public class TransaccionServiceImplement implements TransaccionService {
         List<Descuento> listdesc=descS.list();
 
         Cartera cartera=new Cartera();
-        for (Cartera car : carList) {
-            if(letSer.listId(tr.getIdletra()).getCartera().getIdCartera()==car.getIdCartera()){
-                cartera=car;
-                System.out.println("obteniendo cartera........... "+cartera.getIdCartera());
-            }
-        }
-
-        List<Transaccion> transac=listporcartera(cartera);
-
-        // descS.deleteall();
-        for (Transaccion t : transac) {
-            for (Descuento desc1 : listdesc) {
-                if (desc1.getTransaccion().getIdTransaccion()==t.getIdTransaccion() && t.getLetra().getIdLetra()==tr.getIdletra()) {
-                    descS.delete(desc1.getIdDescuento());
+        if(tr.getIdletra()!=0){
+            for (Cartera car : carList) {
+                if(letSer.listId(tr.getIdletra()).getCartera().getIdCartera()==car.getIdCartera()){
+                    cartera=car;
+                    System.out.println("obteniendo cartera........... "+cartera.getIdCartera());
                 }
             }
-            if (t.getLetra().getIdLetra()==tr.getIdletra()) {
-                cR.deleteById(t.getIdTransaccion());
+
+            List<Transaccion> transac=listporcartera(cartera);
+
+            // descS.deleteall();
+            for (Transaccion t : transac) {
+                for (Descuento desc1 : listdesc) {
+                    if (desc1.getTransaccion().getIdTransaccion()==t.getIdTransaccion() && t.getLetra().getIdLetra()==tr.getIdletra()) {
+                        descS.delete(desc1.getIdDescuento());
+                    }
+                }
+                if (t.getLetra().getIdLetra()==tr.getIdletra()) {
+                    cR.deleteById(t.getIdTransaccion());
+                }
+
+            }
+            if((int)ChronoUnit.DAYS.between(tr.getFechaTransaccion(),letSer.listId(tr.getIdletra()).getFechaVencimiento())>0){
+                Transaccion transaccion = new Transaccion();
+
+                transaccion.setLetra(letSer.listId(tr.getIdletra()).getIdLetra()!=0?letSer.listId(tr.getIdletra()):null);
+                System.out.println("obteniendo letra........... "+tr.getIdletra());
+                System.out.println("obteniendo factura........... "+tr.getIdfactura());
+                transaccion.setFactura(facSer.listId(tr.getIdfactura()).getIdFactura()!=0?facSer.listId(tr.getIdfactura()):null);
+
+                transaccion.setCostesIniciales(tr.getCostesIniciales());
+                transaccion.setCostesFinales(tr.getCostesFinales());
+                transaccion.setFechaTransaccion(tr.getFechaTransaccion());
+                transaccion.setDiasadesc((int)ChronoUnit.DAYS.between(tr.getFechaTransaccion(),letSer.listId(tr.getIdletra()).getFechaVencimiento()));
+
+                transaccion.setId_cartera(cartera.getIdCartera()!=0?cartera:null);
+                cR.save(transaccion);
             }
 
-        }
-        if((int)ChronoUnit.DAYS.between(tr.getFechaTransaccion(),letSer.listId(tr.getIdletra()).getFechaVencimiento())>0){
-            Transaccion transaccion = new Transaccion();
+        }else {
+            for (Cartera car : carList) {
+                if(facSer.listId(tr.getIdfactura()).getCartera().getIdCartera()==car.getIdCartera()){
+                    cartera=car;
+                    System.out.println("obteniendo cartera........... "+cartera.getIdCartera());
+                }
+            }
 
-            transaccion.setLetra(letSer.listId(tr.getIdletra()).getIdLetra()!=0?letSer.listId(tr.getIdletra()):null);
-            System.out.println("obteniendo letra........... "+tr.getIdletra());
-            System.out.println("obteniendo factura........... "+tr.getIdfactura());
-            transaccion.setFactura(facSer.listId(tr.getIdfactura()).getIdFactura()!=0?facSer.listId(tr.getIdfactura()):null);
 
-            transaccion.setCostesIniciales(tr.getCostesIniciales());
-            transaccion.setCostesFinales(tr.getCostesFinales());
-            transaccion.setFechaTransaccion(tr.getFechaTransaccion());
-            transaccion.setDiasadesc((int)ChronoUnit.DAYS.between(tr.getFechaTransaccion(),letSer.listId(tr.getIdletra()).getFechaVencimiento()));
+            List<Transaccion> transac=listporcartera(cartera);
 
-            transaccion.setId_cartera(cartera.getIdCartera()!=0?cartera:null);
-            cR.save(transaccion);
+            // descS.deleteall();
+            for (Transaccion t : transac) {
+                for (Descuento desc1 : listdesc) {//eliminar el descuento existente de la factura
+                    if (desc1.getTransaccion().getIdTransaccion()==t.getIdTransaccion() && t.getFactura().getIdFactura()==tr.getIdfactura()) {
+                        descS.delete(desc1.getIdDescuento());
+                    }
+                }
+                if (t.getFactura().getIdFactura()==tr.getIdfactura()) {
+                    cR.deleteById(t.getIdTransaccion());
+                }
+
+            }
+            if((int)ChronoUnit.DAYS.between(tr.getFechaTransaccion(),facSer.listId(tr.getIdfactura()).getFechaVencimiento())>0){
+                Transaccion transaccion = new Transaccion();
+
+                transaccion.setLetra(letSer.listId(tr.getIdletra()).getIdLetra()!=0?letSer.listId(tr.getIdletra()):null);
+                System.out.println("obteniendo letra........... "+tr.getIdletra());
+                System.out.println("obteniendo factura........... "+tr.getIdfactura());
+                transaccion.setFactura(facSer.listId(tr.getIdfactura()).getIdFactura()!=0?facSer.listId(tr.getIdfactura()):null);
+
+                transaccion.setCostesIniciales(tr.getCostesIniciales());
+                transaccion.setCostesFinales(tr.getCostesFinales());
+                transaccion.setFechaTransaccion(tr.getFechaTransaccion());
+                transaccion.setDiasadesc((int)ChronoUnit.DAYS.between(tr.getFechaTransaccion(),facSer.listId(tr.getIdfactura()).getFechaVencimiento()));
+
+                transaccion.setId_cartera(cartera.getIdCartera()!=0?cartera:null);
+                cR.save(transaccion);
+            }
         }
 
     }
@@ -148,6 +190,10 @@ public class TransaccionServiceImplement implements TransaccionService {
     @Override
     public Transaccion listplet(int idlet) {
         return cR.listplet(idlet);
+    }
+    @Override
+    public Transaccion listpfac(int idfac) {
+        return cR.listpfac(idfac);
     }
 
     @Override

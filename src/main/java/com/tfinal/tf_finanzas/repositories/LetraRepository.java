@@ -10,5 +10,6 @@ import java.util.List;
 
 @Repository
 public interface LetraRepository extends JpaRepository<Letra,Integer>{
+
 public List<Letra> findAllByCartera_IdCartera(int carteraId);
 }
