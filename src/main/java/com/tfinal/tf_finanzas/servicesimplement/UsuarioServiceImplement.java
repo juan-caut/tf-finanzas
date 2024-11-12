@@ -54,6 +54,7 @@ private RolRepository rolRepository;
     public String verificationUser(String ident) {
         return cR.verificationUser(ident);
     }
+
     @Override
     public String authUser(String username, String pass) {
         return cR.authUser(username,pass);

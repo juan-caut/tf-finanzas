@@ -2,6 +2,7 @@ package com.tfinal.tf_finanzas.servicesimplement;
 
 
 import com.tfinal.tf_finanzas.entities.Factura;
+import com.tfinal.tf_finanzas.entities.Letra;
 import com.tfinal.tf_finanzas.repositories.FacturaRepository;
 import com.tfinal.tf_finanzas.service.FacturaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,11 @@ public class FacturaServiceImplement implements FacturaService {
     @Override
     public Factura listId(int id) {
         return cR.findById(id).orElse(new Factura());
+    }
+
+    @Override
+    public List<Factura> findAllByCarteraIs(int carteraId) {
+        return cR.findAllByCartera_IdCartera(carteraId);
     }
 }
 
