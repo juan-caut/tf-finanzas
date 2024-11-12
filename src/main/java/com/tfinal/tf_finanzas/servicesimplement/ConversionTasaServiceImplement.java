@@ -36,6 +36,11 @@ public class ConversionTasaServiceImplement implements ConversionTasaService {
         return cR.findById( id).orElse(new ConversionTasa());
     }
 
+    @Override
+    public void delete(int id) {
+        cR.deleteById(id);
+    }
+
     private static BigDecimal calculartea(ConversionTasa conversionTasa) {
 
         int n=0;
@@ -65,6 +70,7 @@ public class ConversionTasaServiceImplement implements ConversionTasaService {
         BigDecimal TEA=teacalc3.multiply(BigDecimal.valueOf(100));
         return TEA;
     }
+
 
 }
 
