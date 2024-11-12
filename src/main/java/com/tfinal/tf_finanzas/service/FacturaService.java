@@ -11,4 +11,5 @@ public interface FacturaService {
     public Factura listId(int id);
     public List<Factura> findAllByCarteraIs(int carteraId);
 
+    public void delete(int id,TransaccionService transaccionService);
 }
