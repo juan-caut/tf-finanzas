@@ -23,8 +23,7 @@ public class LetraServiceImplement implements LetraService {
     private CarteraService cS;
     @Autowired
     private DescuentoService descuentoService;
-    @Autowired
-    private ConversionTasaService conversionTasaService;
+
     @Autowired
     private EstadoLetFacService estadoLetFacService;
 
@@ -73,9 +72,7 @@ public class LetraServiceImplement implements LetraService {
         return cR.findAllByCartera_IdCartera(carteraId);
     }
 
-    public void generartransaccion(TransaccionService transaccionService) {
 
-    }
 
     @Override
     public void delete(int id, TransaccionService transaccionService) {
@@ -84,6 +81,7 @@ public class LetraServiceImplement implements LetraService {
 
         List<Transaccion> transaccion = transaccionService.list();
         for (Transaccion tr : transaccion) {
+            if(tr.getLetra()!=null){
             if (tr.getLetra().getIdLetra() == id) {
                 for (Descuento des : listaDescuento) {
                     if (des.getTransaccion().getIdTransaccion() == tr.getIdTransaccion()) {
@@ -91,14 +89,15 @@ public class LetraServiceImplement implements LetraService {
                     }
                 }
                 transaccionService.delete(tr.getIdTransaccion());
-            }
+            }}
         }
 
         List<EstadoLetFac> listEstadoletFact = estadoLetFacService.list();
         for (EstadoLetFac tr : listEstadoletFact) {
+            if(tr.getLetra()!=null){
             if (tr.getLetra().getIdLetra() == id) {
                 estadoLetFacService.delete(tr.getIdEstado());
-            }
+            }}
         }
 
         cR.deleteById(id);
