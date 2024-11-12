@@ -7,6 +7,11 @@ import java.util.List;
 public interface DescuentoService {
     public void insert(Descuento desc);
     List<Descuento> list();
-    public Descuento listId(int id);
+    Descuento listId(int id);
     public void insertDesc(int id);
+    public void deleteall();
+
+    Descuento descontar(int idtra);
+
+    public void delete(int id);
 }

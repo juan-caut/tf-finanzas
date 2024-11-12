@@ -13,7 +13,7 @@ public class ConversionTasa {
     @Column(name = "idconvtasa")
     private int idConvTasa;
 
-    @Column(name = "tasanominal",nullable = false)
+    @Column(name = "tasanominal", precision = 20, scale = 15,nullable = false)
     private BigDecimal tasaNominal;
 
     @Column(name = "tipotasa", nullable = true)
@@ -22,7 +22,7 @@ public class ConversionTasa {
     @Column(name = "capitalizacion", nullable = false)
     private int capitalizacion;
 
-    @Column(name = "tasa_efectiva",nullable = true)
+    @Column(name = "tasa_efectiva", precision = 20, scale = 15,nullable = true)
     private BigDecimal tasaEfectiva;
 
     @ManyToOne

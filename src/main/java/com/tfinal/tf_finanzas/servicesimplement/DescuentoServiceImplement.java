@@ -1,14 +1,8 @@
 package com.tfinal.tf_finanzas.servicesimplement;
 
 
-import com.tfinal.tf_finanzas.entities.Descuento;
-import com.tfinal.tf_finanzas.entities.Factura;
-import com.tfinal.tf_finanzas.entities.Letra;
-import com.tfinal.tf_finanzas.entities.Transaccion;
-import com.tfinal.tf_finanzas.repositories.DescuentoRepository;
-import com.tfinal.tf_finanzas.repositories.FacturaRepository;
-import com.tfinal.tf_finanzas.repositories.LetraRepository;
-import com.tfinal.tf_finanzas.repositories.TransaccionRepository;
+import com.tfinal.tf_finanzas.entities.*;
+import com.tfinal.tf_finanzas.repositories.*;
 import com.tfinal.tf_finanzas.service.DescuentoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,6 +17,7 @@ public class DescuentoServiceImplement implements DescuentoService {
 
     @Autowired
     private DescuentoRepository cR;
+
     @Autowired
     private TransaccionRepository tR;
 
@@ -31,6 +26,7 @@ public class DescuentoServiceImplement implements DescuentoService {
 
     @Autowired
     private FacturaRepository facR;
+
 
     @Override
     public List<Descuento> list() {
@@ -46,6 +42,32 @@ public class DescuentoServiceImplement implements DescuentoService {
     public Descuento listId(int id) {
         return cR.findById(id).orElse(new Descuento());
     }
+
+    @Override
+    public Descuento descontar(int idtra) {
+        List<Descuento> listdesc=cR.findAll();
+
+        for (Descuento desc1 : listdesc) {
+            if (desc1.getTransaccion().getIdTransaccion()==idtra) {
+                cR.deleteById(desc1.getIdDescuento());
+            }
+        }
+        System.out.println("Registrando descuento ... ");
+        insertDesc(idtra);
+        System.out.println("Descuento Registrado ... ");
+        List<Descuento> listdesc2=cR.findAll();
+        Descuento desret=new Descuento();
+
+        for (Descuento desc2 : listdesc2) {
+            if (desc2.getTransaccion().getIdTransaccion()==idtra) {
+                System.out.println("Descuento  encontrado ... "+desc2.getIdDescuento());
+                desret= desc2;
+            }
+        }
+        return desret;
+
+    }
+
 
     @Override
     public void insertDesc(int id) {
@@ -75,10 +97,10 @@ public class DescuentoServiceImplement implements DescuentoService {
             BigDecimal valorneto=letra.getValorNominal().subtract(montodescuento);
 
             //calcular valor recibido
-            BigDecimal valorrecibido=valorneto.subtract(transaccion.getCostesIniciales());
+            BigDecimal valorrecibido=valorneto.subtract(transaccion.getCostesIniciales()!= null ? transaccion.getCostesIniciales() : BigDecimal.ZERO);
 
             //calcular valor entregado
-            BigDecimal valorentregado=letra.getValorNominal().add(transaccion.getCostesFinales());
+            BigDecimal valorentregado=letra.getValorNominal().add(transaccion.getCostesFinales()!= null ? transaccion.getCostesFinales() : BigDecimal.ZERO);
 
             //calcular TCEA
             BigDecimal TCEAbase=valorentregado.divide(valorrecibido ,15, RoundingMode.HALF_UP);
@@ -135,15 +157,24 @@ public class DescuentoServiceImplement implements DescuentoService {
             descuento.setTransaccion(transaccion);
         }
         cR.save(descuento);
+
+    }
+
+    @Override
+    public void deleteall() {
+        cR.deleteAll();
+    }
+
+    @Override
+    public void delete(int id) {
+        cR.deleteById(id);
     }
 
 
     // Método para calcular la potencia base ^ exponente usando logaritmos y exponenciales
     public static BigDecimal bigDecimalPow(BigDecimal base, BigDecimal exponente, MathContext mc) {
         // Validar que la base no sea negativa
-        if (base.compareTo(BigDecimal.ZERO) <= 0) {
-            throw new IllegalArgumentException("La base debe ser mayor que 0.");
-        }
+
 
         // ln(base) * exponente
         BigDecimal logBase = BigDecimal.valueOf(Math.log(base.doubleValue()));
