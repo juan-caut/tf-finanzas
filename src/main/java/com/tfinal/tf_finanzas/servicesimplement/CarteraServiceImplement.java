@@ -4,6 +4,7 @@ package com.tfinal.tf_finanzas.servicesimplement;
 import com.tfinal.tf_finanzas.entities.Cartera;
 import com.tfinal.tf_finanzas.entities.Factura;
 import com.tfinal.tf_finanzas.entities.Letra;
+import com.tfinal.tf_finanzas.entities.TasaCambio;
 import com.tfinal.tf_finanzas.repositories.CarteraRepository;
 import com.tfinal.tf_finanzas.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,7 +47,13 @@ public class CarteraServiceImplement implements CarteraService {
     public void delete(int id, TransaccionService transaccion,LetraService letraService,FacturaService facturaService) {
         List<Letra> listaletra = letraService.list();
         List<Factura> listafactura = facturaService.list();
-        tasaCambioService.delete(id);
+        List<TasaCambio>listTasa=tasaCambioService.list();
+        for (TasaCambio tasa : listTasa) {
+            if (tasa.getCartera().getIdCartera() == id) {
+                tasaCambioService.delete(id); // Pass the letra ID to ensure specific deletion
+            }
+        }
+
         for (Letra letra : listaletra) {
             if (letra.getCartera().getIdCartera() == id) {
                 letraService.delete(letra.getIdLetra(), transaccion); // Pass the letra ID to ensure specific deletion
