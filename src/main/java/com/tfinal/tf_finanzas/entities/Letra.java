@@ -34,7 +34,7 @@ public class Letra {
     @Column(name = "tasa_efectiva", precision = 17, scale = 15, nullable = true)
     private BigDecimal tasaEfectiva;
 
-    private  boolean visible;
+
     @ManyToOne
     @JoinColumn(name = "id_cartera", nullable = false)
     private Cartera cartera;

@@ -8,4 +8,5 @@ public interface FacturaService {
     public void insert(Factura fac);
     List<Factura> list();
     public Factura listId(int id);
+    public void delete(int id,TransaccionService transaccionService);
 }

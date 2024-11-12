@@ -30,5 +30,10 @@ public class EstadoLetFacServiceImplement implements EstadoLetFacService {
     public EstadoLetFac listId(int id) {
         return cR.findById( id).orElse(new EstadoLetFac());
     }
+
+    @Override
+    public void delete(int id) {
+        cR.deleteById( id );
+    }
 }
 

@@ -12,5 +12,5 @@ public interface LetraService {
     List<Letra> list();
     public Letra listId(int id);
     public List<Letra> findAllByCarteraIs(int carteraId);
-    public void delete(int id);
+    public void delete(int id,TransaccionService transaccionService);
 }

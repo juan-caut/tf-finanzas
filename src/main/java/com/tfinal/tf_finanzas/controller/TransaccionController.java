@@ -44,13 +44,13 @@ public class TransaccionController {
         TransaccionDTO p = m.map(dto, TransaccionDTO.class);
         revS.insertvarios(p);
 
-        List<Transaccion> listtra=revS.listporcartera(carsS.listId(dto.getId_cartera()) );
+        List<Transaccion> listtra = revS.listporcartera(carsS.listId(dto.getId_cartera()));
 
         System.out.println("descontarndo transacciones: ");
 
-        if(listtra!=null){
+        if (listtra != null) {
             for (Transaccion t : listtra) {
-                        descS.insertDesc(t.getIdTransaccion());
+                descS.insertDesc(t.getIdTransaccion());
             }
         }
 
@@ -68,14 +68,14 @@ public class TransaccionController {
     @GetMapping("/{id}")
     public Transaccion listId(@PathVariable("id") Integer id) {
         ModelMapper m = new ModelMapper();
-        Transaccion dto=m.map(revS.listId(id),Transaccion.class);
+        Transaccion dto = m.map(revS.listId(id), Transaccion.class);
         return dto;
     }
 
     @GetMapping("/trapletr/{idlet}")
     public TransaccionDTO2 listpletra(@PathVariable("idlet") Integer idlet) {
         ModelMapper m = new ModelMapper();
-        TransaccionDTO2 dto=m.map(revS.listplet(idlet),TransaccionDTO2.class);
+        TransaccionDTO2 dto = m.map(revS.listplet(idlet), TransaccionDTO2.class);
         return dto;
     }
 
@@ -91,5 +91,8 @@ public class TransaccionController {
         revS.updateCosts(id);
     }
 
-
+    @DeleteMapping("/delelete")
+    public void delete(@RequestParam int id) {
+        revS.delete(id);
+    }
 }

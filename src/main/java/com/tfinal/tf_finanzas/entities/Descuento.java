@@ -24,7 +24,7 @@ public class Descuento {
     @Column(name = "valorneto", precision = 24, scale = 15)
     private BigDecimal valorNeto;
 
-    @Column(name = "tcea",  nullable = false)
+    @Column(name = "tcea",precision = 24, scale = 15,  nullable = false)
     private BigDecimal tcea;
 
     @Column(name = "valorrecibido", precision = 24, scale = 15, nullable = false)

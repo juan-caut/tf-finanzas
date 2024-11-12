@@ -2,8 +2,11 @@ package com.tfinal.tf_finanzas.controller;
 
 import com.tfinal.tf_finanzas.entities.Factura;
 import com.tfinal.tf_finanzas.service.FacturaService;
+import com.tfinal.tf_finanzas.service.TransaccionService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,7 +17,8 @@ import java.util.stream.Collectors;
 public class FacturaController {
     @Autowired
     private FacturaService revS;
-
+    @Autowired
+    private TransaccionService transaccionService;
     @PostMapping
     public void insert(@RequestBody Factura dto) {
         ModelMapper m = new ModelMapper();
@@ -44,5 +48,13 @@ public class FacturaController {
         revS.insert(p);
     }
 
-
+    @DeleteMapping("/eliminar")
+    public ResponseEntity<Void> eliminarFactura(@RequestParam Integer id) {
+        try {
+            revS.delete(id, transaccionService);
+            return new ResponseEntity<>(HttpStatus.OK); // Estado 202, sin contenido
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND); // Estado 404 si no se encuentra el recurso
+        }
+    }
 }

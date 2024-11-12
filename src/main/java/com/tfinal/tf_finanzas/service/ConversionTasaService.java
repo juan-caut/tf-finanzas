@@ -9,5 +9,5 @@ public interface ConversionTasaService {
     public BigDecimal insert(ConversionTasa conv);
     List<ConversionTasa> list();
     public ConversionTasa listId(int id);
-
+public void delete(int id);
 }

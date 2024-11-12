@@ -25,6 +25,6 @@ public class LetraDTO {
     private BigDecimal tasaEfectiva;
 
     private int carteraid;
-    private boolean visible;
+
 
 }

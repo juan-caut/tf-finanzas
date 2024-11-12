@@ -7,4 +7,5 @@ public interface TasaCambioService {
     public void insert(TasaCambio tasaCambio);
     List<TasaCambio> list();
     public TasaCambio listId(int idTasaCambio);
+    public void delete(int idTasaCambio);
 }
