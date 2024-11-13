@@ -137,10 +137,10 @@ public class DescuentoServiceImplement implements DescuentoService {
             BigDecimal valorneto=factura.getMontoTotal().subtract(montodescuento);
 
             //calcular valor recibido
-            BigDecimal valorrecibido=valorneto.subtract(transaccion.getCostesIniciales());
+            BigDecimal valorrecibido=valorneto.subtract(transaccion.getCostesIniciales()!= null ? transaccion.getCostesIniciales() : BigDecimal.ZERO);
 
             //calcular valor entregado
-            BigDecimal valorentregado=factura.getMontoTotal().add(transaccion.getCostesFinales());
+            BigDecimal valorentregado=factura.getMontoTotal().add(transaccion.getCostesFinales()!= null ? transaccion.getCostesFinales() : BigDecimal.ZERO);
 
             //calcular TCEA
             BigDecimal TCEAbase=valorentregado.divide(valorrecibido ,15, RoundingMode.HALF_UP);

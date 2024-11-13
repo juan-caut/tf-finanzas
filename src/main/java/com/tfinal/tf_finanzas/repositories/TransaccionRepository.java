@@ -29,6 +29,10 @@ public interface TransaccionRepository extends JpaRepository<Transaccion,Integer
     @Query("from Transaccion u where u.factura.idFactura=:idfac")
     Transaccion listpfac(@Param("idfac") int idfac);
 
+    @Query("from Transaccion u where u.id_cartera.idCartera=:idcar")
+    Transaccion listpcar(@Param("idcar") int idcar);
+
+
 
 
 }

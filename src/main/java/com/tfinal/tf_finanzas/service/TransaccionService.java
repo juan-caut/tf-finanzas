@@ -22,6 +22,7 @@ public interface TransaccionService {
     Transaccion listId(int idTransaccion);
     Transaccion listplet(int letra);
     Transaccion listpfac(int fact);
+    Transaccion listpcar(int cart);
     public void updateCosts(int id);
     public void delete(int idTransaccion);
 }

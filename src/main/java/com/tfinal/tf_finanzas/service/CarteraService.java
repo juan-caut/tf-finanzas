@@ -1,4 +1,5 @@
 package com.tfinal.tf_finanzas.service;
+import com.tfinal.tf_finanzas.dto.ReporteDTO;
 import com.tfinal.tf_finanzas.entities.Cartera;
 
 import java.util.List;
@@ -8,5 +9,6 @@ public interface CarteraService {
     List<Cartera> list();
     public Cartera listId(int id);
     public List<Cartera> getCarterasByUsuarioId(int usuarioId);
+    public List<ReporteDTO> getreport(int idcart);
     public void delete(int id,TransaccionService transaccion,LetraService letraService,FacturaService facturaService);
 }

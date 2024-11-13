@@ -1,6 +1,7 @@
 package com.tfinal.tf_finanzas.controller;
 
 import com.tfinal.tf_finanzas.dto.CarteraDTO;
+import com.tfinal.tf_finanzas.dto.ReporteDTO;
 import com.tfinal.tf_finanzas.entities.Cartera;
 import com.tfinal.tf_finanzas.service.CarteraService;
 import com.tfinal.tf_finanzas.service.FacturaService;
@@ -59,9 +60,15 @@ public class CarteraController {
 
     @GetMapping("/carteraByUser")
     public List<Cartera> getCarterasByUsuarioId(@RequestParam int usuarioId) {
-
         return (revS.getCarterasByUsuarioId(usuarioId));
     }
+
+    @GetMapping("/carterareport")
+    public List<ReporteDTO> getcarterasreport(@RequestParam int idcar) {
+
+        return (revS.getreport(idcar));
+    }
+
     @DeleteMapping("/eliminar")
     public ResponseEntity<Void> eliminarCartera(@RequestParam Integer id) {
         try {

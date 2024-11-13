@@ -2,18 +2,15 @@ package com.tfinal.tf_finanzas.controller;
 
 import com.tfinal.tf_finanzas.dto.TransaccionDTO;
 import com.tfinal.tf_finanzas.dto.TransaccionDTO2;
-import com.tfinal.tf_finanzas.entities.Cartera;
-import com.tfinal.tf_finanzas.entities.Descuento;
-import com.tfinal.tf_finanzas.entities.Transaccion;
-import com.tfinal.tf_finanzas.service.CarteraService;
-import com.tfinal.tf_finanzas.service.DescuentoService;
-import com.tfinal.tf_finanzas.service.TransaccionService;
+import com.tfinal.tf_finanzas.entities.*;
+import com.tfinal.tf_finanzas.service.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @CrossOrigin(origins = "http://localhost:4200")
@@ -30,19 +27,61 @@ public class TransaccionController {
     @Autowired
     private CarteraService carsS;
 
+    @Autowired
+    private LetraService letS;
+    @Autowired
+    private FacturaService facS;
+
 
     @PostMapping
     public void insert(@RequestBody TransaccionDTO2 dto) {
-        ModelMapper m = new ModelMapper();
-        TransaccionDTO2 p = m.map(dto, TransaccionDTO2.class);
-        revS.insert2(p);
+               revS.insert2(dto);
     }
 
-    @PostMapping("/descontarletras")
-    public void insertvarios(@RequestBody TransaccionDTO dto) {
+    @PostMapping("/transacart")
+    public void insert(@RequestBody TransaccionDTO dto) {
         ModelMapper m = new ModelMapper();
-        TransaccionDTO p = m.map(dto, TransaccionDTO.class);
-        revS.insertvarios(p);
+
+        if (Objects.equals(carsS.listId(dto.getId_cartera()).getTipoDoc(), "LETRA")){
+
+            List<Letra> letrascart=letS.findAllByCarteraIs(dto.getId_cartera());
+            for (Letra letra:letrascart){
+                TransaccionDTO2 t2 = m.map(dto, TransaccionDTO2.class);
+                t2.setIdletra(letra.getIdLetra());
+
+                revS.insert2(t2);
+
+            }
+            List<Transaccion> transacion=revS.listporcartera(carsS.listId(dto.getId_cartera()));
+            for (Transaccion trans:transacion){
+                descS.descontar(trans.getIdTransaccion());
+            }
+
+        }else if (Objects.equals(carsS.listId(dto.getId_cartera()).getTipoDoc(), "FACTURA")){
+
+            List<Factura> facturascart=facS.findAllByCarteraIs(dto.getId_cartera());
+            for (Factura factura:facturascart){
+                TransaccionDTO2 t2 = m.map(dto, TransaccionDTO2.class);
+                t2.setIdfactura(factura.getIdFactura());
+                revS.insert2(t2);
+            }
+            List<Transaccion> transaccion=revS.listporcartera(carsS.listId(dto.getId_cartera()));
+            for (Transaccion trans:transaccion){
+                descS.descontar(trans.getIdTransaccion());
+            }
+        }
+
+
+
+    }
+
+
+    /// ====NOAPLICAR
+    /*
+    @PostMapping("peligronousar")
+    public void insertvarios(@RequestBody TransaccionDTO dto) {
+
+        revS.insertvarios(dto);
 
         List<Transaccion> listtra = revS.listporcartera(carsS.listId(dto.getId_cartera()));
 
@@ -55,6 +94,7 @@ public class TransaccionController {
         }
 
     }
+*/
 
 
     @GetMapping
@@ -64,27 +104,27 @@ public class TransaccionController {
             return m.map(x, Transaccion.class);
         }).collect(Collectors.toList());
     }
-
     @GetMapping("/{id}")
     public Transaccion listId(@PathVariable("id") Integer id) {
         ModelMapper m = new ModelMapper();
-        Transaccion dto = m.map(revS.listId(id), Transaccion.class);
-        return dto;
+        return m.map(revS.listId(id), Transaccion.class);
     }
-
     @GetMapping("/trapletr/{idlet}")
     public TransaccionDTO2 listpletra(@PathVariable("idlet") Integer idlet) {
         ModelMapper m = new ModelMapper();
-        TransaccionDTO2 dto = m.map(revS.listplet(idlet), TransaccionDTO2.class);
-        return dto;
+        return m.map(revS.listplet(idlet), TransaccionDTO2.class);
+    }
+    @GetMapping("/trapfact/{idfac}")
+    public TransaccionDTO2 listpfact(@PathVariable("idfac") Integer idfac) {
+        ModelMapper m = new ModelMapper();
+        return m.map(revS.listpfac(idfac),TransaccionDTO2.class);
+    }
+    @GetMapping("/trapcart/{idcar}")
+    public TransaccionDTO2 listpcart(@PathVariable("idcar") Integer idcar) {
+        ModelMapper m = new ModelMapper();
+        return m.map(revS.listpcar(idcar),TransaccionDTO2.class);
     }
 
-    @GetMapping("/trapfact/{idlet}")
-    public TransaccionDTO2 listpfact(@PathVariable("idlet") Integer idlet) {
-        ModelMapper m = new ModelMapper();
-        TransaccionDTO2 dto=m.map(revS.listpfac(idlet),TransaccionDTO2.class);
-        return dto;
-    }
 
 
     @PutMapping
@@ -93,11 +133,12 @@ public class TransaccionController {
         Transaccion p = m.map(dto, Transaccion.class);
         revS.insert(p);
     }
-
     @PutMapping("/updatecosts")
     public void updateCosts(@RequestParam("id") Integer id) {
         revS.updateCosts(id);
     }
+
+
 
     @DeleteMapping("/delelete")
     public void delete(@RequestParam int id) {
