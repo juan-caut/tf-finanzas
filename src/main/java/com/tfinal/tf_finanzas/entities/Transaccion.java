@@ -1,10 +1,14 @@
 package com.tfinal.tf_finanzas.entities;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+@Setter
+@Getter
 @Entity
 @Table(name = "transacciones")
 public class Transaccion {
@@ -15,84 +19,44 @@ public class Transaccion {
     private int idTransaccion;
 
     @ManyToOne
-    @JoinColumn(name = "id_letra")
+    @JoinColumn(name = "id_letra", nullable = true)
     private Letra letra;
 
     @ManyToOne
-    @JoinColumn(name = "id_factura")
+    @JoinColumn(name = "id_factura", nullable = true)
     private Factura factura;
 
     @Column(name = "fecha_transaccion", nullable = false)
     private LocalDate fechaTransaccion;
 
-    @Column(name = "costes_iniciales", precision = 24, scale = 15)
+    @Column(name = "diasadesc", nullable = true)
+    private int diasadesc;
+
+    @Column(name = "costes_iniciales", precision = 24, scale = 15, nullable = true)
     private BigDecimal costesIniciales;
 
-    @Column(name = "costes_finales", precision = 24, scale = 15)
+    @Column(name = "costes_finales", precision = 24, scale = 15, nullable = true)
     private BigDecimal costesFinales;
+
+    @ManyToOne
+    @JoinColumn(name = "id_cartera", nullable = true)
+    private Cartera id_cartera;
 
     // Constructor sin argumentos
     public Transaccion() {
     }
 
-    // Constructor con argumentos
-    public Transaccion(int idTransaccion, Letra letra, Factura factura,
-                       LocalDate fechaTransaccion, BigDecimal costesIniciales,
-                       BigDecimal costesFinales) {
+    public Transaccion(int idTransaccion, Letra letra, Factura factura, LocalDate fechaTransaccion, int diasadesc, BigDecimal costesIniciales, BigDecimal costesFinales, Cartera id_cartera) {
         this.idTransaccion = idTransaccion;
         this.letra = letra;
         this.factura = factura;
         this.fechaTransaccion = fechaTransaccion;
+        this.diasadesc = diasadesc;
         this.costesIniciales = costesIniciales;
         this.costesFinales = costesFinales;
+        this.id_cartera = id_cartera;
     }
 
     // Getters y Setters
-    public int getIdTransaccion() {
-        return idTransaccion;
-    }
 
-    public void setIdTransaccion(int idTransaccion) {
-        this.idTransaccion = idTransaccion;
-    }
-
-    public Letra getLetra() {
-        return letra;
-    }
-
-    public void setLetra(Letra letra) {
-        this.letra = letra;
-    }
-
-    public Factura getFactura() {
-        return factura;
-    }
-
-    public void setFactura(Factura factura) {
-        this.factura = factura;
-    }
-
-    public LocalDate getFechaTransaccion() {
-        return fechaTransaccion;
-    }
-
-    public void setFechaTransaccion(LocalDate fechaTransaccion) {
-        this.fechaTransaccion = fechaTransaccion;
-    }
-
-    public BigDecimal getCostesIniciales() {
-        return costesIniciales;
-    }
-
-    public void setCostesIniciales(BigDecimal costesIniciales) {
-        this.costesIniciales = costesIniciales;
-    }
-
-    public BigDecimal getCostesFinales() {
-        return costesFinales;
-    }
-
-    public void setCostesFinales(BigDecimal costesFinales) {
-        this.costesFinales = costesFinales;
-    }
 }

@@ -1,9 +1,10 @@
 package com.tfinal.tf_finanzas.entities;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
 import java.time.LocalDateTime;
-
+@Data
 @Entity
 @Table(name = "carteras")
 public class Cartera {
@@ -24,7 +25,8 @@ public class Cartera {
 
     @Column(name = "moneda", length = 10, nullable = true)
     private String moneda;
-
+    @Column(name = "tasaCambio", length = 10, nullable = true)
+    private String tasaCambio;
     @ManyToOne
     @JoinColumn(name = "usuario_creador", nullable = false)
     private Usuario usuarioCreador;

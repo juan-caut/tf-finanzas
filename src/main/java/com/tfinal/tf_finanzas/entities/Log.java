@@ -2,10 +2,13 @@ package com.tfinal.tf_finanzas.entities;
 
 
 import jakarta.persistence.*;
+import lombok.Data;
+
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "logs")
+@Data
 public class Log {
 
     @Id

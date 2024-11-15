@@ -1,5 +1,7 @@
 package com.tfinal.tf_finanzas.controller;
 
+import com.tfinal.tf_finanzas.dto.UsuarioDTO;
+import com.tfinal.tf_finanzas.dto.UsuarioRequest;
 import com.tfinal.tf_finanzas.entities.Usuario;
 import com.tfinal.tf_finanzas.service.UsuarioService;
 import org.modelmapper.ModelMapper;
@@ -8,9 +10,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/api/usuario")
 public class UsuarioController {
@@ -18,63 +23,79 @@ public class UsuarioController {
     private UsuarioService revS;
 
     @PostMapping
-    public void insert(@RequestBody Usuario dto) {
-        ModelMapper m = new ModelMapper();
-        Usuario p = m.map(dto, Usuario.class);
-        revS.insert(p);
+    public void insert(@RequestBody UsuarioRequest dto) {
+        System.out.println(dto);
+        Usuario exite=  revS.getUsuariobyusername(dto.getUsername());
+        System.out.println("agggg "+exite);
+
+        if(exite==null) {
+            try {
+                ModelMapper m = new ModelMapper();
+                revS.insert(dto);
+            } catch (Exception e) {
+                e.toString();
+            }
+
+        }
     }
 
     @GetMapping
-    public List<Usuario> list() {
+    public List<UsuarioDTO> list() {
         return revS.list().stream().map(x -> {
             ModelMapper m = new ModelMapper();
-            return m.map(x, Usuario.class);
+            return m.map(x, UsuarioDTO.class);
         }).collect(Collectors.toList());
     }
 
     @GetMapping("/{id}")
-    public Usuario listId(@PathVariable("id") Integer id) {
+    public UsuarioDTO listId(@PathVariable("id") Integer id) {
         ModelMapper m = new ModelMapper();
-        Usuario dto=m.map(revS.listId(id),Usuario.class);
+        UsuarioDTO dto = m.map(revS.listId(id), UsuarioDTO.class);
         return dto;
     }
 
-    @PutMapping
-    public void update(@RequestBody Usuario dto) {
+    @GetMapping("/get")
+    public Usuario getUsuariobyusername(@RequestParam String username) {
         ModelMapper m = new ModelMapper();
-        Usuario p = m.map(dto, Usuario.class);
-        revS.insert(p);
+        Usuario dto = m.map(revS.getUsuariobyusername(username), Usuario.class);
+        return dto;
     }
+
+
+
 
     @GetMapping("/verification")
     public String verificationUser(@RequestParam("ident") String ident) {
         ModelMapper m = new ModelMapper();
-        String str=revS.verificationUser(ident);
+        String str = revS.verificationUser(ident);
         return str;
     }
 
     @GetMapping("/login")
-    public ResponseEntity<String> authUser(@RequestParam("ident") String ident, @RequestParam("pass") String pass) {
+    public ResponseEntity<String> login( @RequestParam String username, @RequestParam String password) {
 
-        if (!ident.matches("[a-zA-Z0-9_]+")) {
+        if (!username.matches("[a-zA-Z0-9_]+")) {
             return ResponseEntity.ok("FALLA");
-        } else if (!pass.matches("[a-zA-Z0-9_]+")) {
+        } else if (!password.matches("[a-zA-Z0-9_]+")) {
             return ResponseEntity.ok("FALLA");
         }
-        String str = revS.authUser(ident, pass);
+
+        String value = revS.authUser(username, password);
+
         try {
-            // Lógica principal
-            if (str.matches("ACTIVO")) {
-                return ResponseEntity.ok(str);
-            }else{
+            // Lógica principalgit
+            if (value.matches("ACTIVO")) {
+                return ResponseEntity.ok(value);
+            } else {
                 return ResponseEntity.ok("USUARIO INVALIDO");
             }
         } catch (Exception e) {
             // Manejo de la excepción
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("USUARIO INVALIDO" );
+                    .body("USUARIO INVALIDO");
         }
-    }
 
+
+    }
 
 }

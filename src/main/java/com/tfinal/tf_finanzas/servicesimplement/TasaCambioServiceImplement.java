@@ -30,5 +30,11 @@ public class TasaCambioServiceImplement implements TasaCambioService {
     public TasaCambio listId(int id) {
         return cR.findById( id).orElse(new TasaCambio());
     }
+
+    @Override
+    public void delete(int idTasaCambio) {
+        cR.deleteById(idTasaCambio);
+    }
+
 }
 

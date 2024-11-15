@@ -7,4 +7,6 @@ public interface CarteraService {
     public void insert(Cartera cartera);
     List<Cartera> list();
     public Cartera listId(int id);
+    public List<Cartera> getCarterasByUsuarioId(int usuarioId);
+    public void delete(int id,TransaccionService transaccion,LetraService letraService,FacturaService facturaService);
 }

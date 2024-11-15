@@ -20,29 +20,38 @@ public class Coste {
     @Column(name = "nombre", length = 20, nullable = false)
     private String nombre;
 
-    @Column(name = "monto", precision = 24, scale = 15)
+    @Column(name = "monto", precision = 24, scale = 15,  nullable = true)
     private BigDecimal monto;
 
-    @Column(name = "porcentaje", precision = 17, scale = 15)
+    @Column(name = "porcentaje", precision = 17, scale = 15, nullable = true)
     private BigDecimal porcentaje;
+
+    @Column(name = "montoporcent", precision = 24, scale = 15,  nullable = true)
+    private BigDecimal montoporcent;
 
     @ManyToOne
     @JoinColumn(name = "transacciones_idtransaccion", nullable = false)
     private Transaccion transaccion;
 
-    // Constructor sin argumentos
     public Coste() {
     }
 
-    // Constructor con argumentos
-    public Coste(int idCostes, String tipoCoste, String nombre,
-                 BigDecimal monto, BigDecimal porcentaje, Transaccion transaccion) {
+    public Coste(int idCostes, String tipoCoste, String nombre, BigDecimal monto, BigDecimal porcentaje, BigDecimal montoPorcent, Transaccion transaccion) {
         this.idCostes = idCostes;
         this.tipoCoste = tipoCoste;
         this.nombre = nombre;
         this.monto = monto;
         this.porcentaje = porcentaje;
+        this.montoporcent = montoPorcent;
         this.transaccion = transaccion;
+    }
+
+    public BigDecimal getMontoPorcent() {
+        return montoporcent;
+    }
+
+    public void setMontoPorcent(BigDecimal montoPorcent) {
+        this.montoporcent = montoPorcent;
     }
 
     // Getters y Setters
